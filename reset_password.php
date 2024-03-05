@@ -86,13 +86,13 @@
                 <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                 <input type="password"  name="new_password" >
                 <p class="greska"><?php echo isset($novaSifraGreska) ? $novaSifraGreska : ""; ?></p><br>
-                <label>Sifra</label>
+                <label>Nova lozinka</label>
             </div>
             <div class="input-box">
                 <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                 <input type="password"   name="repeat_new_password">
                 <p class="greska"><?php echo isset($repeat_novaSifraGreska) ? $repeat_novaSifraGreska : ""; ?></p><br>
-                <label>Ponovljena sifra</label>
+                <label>Ponovljena lozinka</label>
 
                 <input type="hidden" value="<?php echo isset($_GET['kod']) ? $_GET['kod'] : '';?> " name="kod">
 

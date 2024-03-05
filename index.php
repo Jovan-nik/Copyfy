@@ -18,7 +18,8 @@
 </head>
 <body>
 <?php 
-            include "novaLozinka.php";
+        
+            //include "novaLozinka.php";
             include "registracija.php";
             include "login.php";
             $registration_message = "";
@@ -176,7 +177,7 @@
             <div class="input-box">
                 <span class="icon"><ion-icon name="mail"></ion-icon></span>
                 <input type="email"  name="login_email" >
-                <p class="greska"><?php echo isset($login_emailgreska) ? $login_emailgreska : ""; ?></p><br>
+                <p id="login_emailgreska"class="greska"><?php echo isset($login_emailgreska) ? $login_emailgreska : ""; ?></p><br>
                 <label>Email</label>
                 
             </div>
@@ -189,7 +190,7 @@
             </div>
             <div class="seti-se">
                 <label><input type="checkbox" id="zapamti_podatke" name="zapamti_podatke">Zapamti podatke</label>
-                <a href="#">Zaboravili ste lozinku?</a>
+                <a  id="zaboraviliSteLozinku" href="#">Zaboravili ste lozinku?</a>
 
             </div>
             <button type="submit" class="dugme" name="login_submit">
@@ -247,7 +248,9 @@
     </div>
 </div>
 <!-- KRAJ FORME -->
+
 <script src="logoutDugme.js"></script>
+<script src="novaLozinka.js"></script>
 <?php if ($include_js) { ?>
 <script src="main.js"></script>
 <?php } ?>

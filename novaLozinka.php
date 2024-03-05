@@ -9,7 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
         for ($i = 0; $i < 6; $i++) {
             $kod .= $znakovi[rand(0, $duzina_znakova - 1)];
         }
-   $conn = connect();
+    
+    $conn = connect();
+    
+   
     $loginEmail = $_POST["email"];
 
     $login_emailgreska="";
@@ -17,6 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
     $result = $conn->query($check_query);
     if ($result->num_rows == 0) {
       $login_emailgreska="Korisnik ne postoji u bazi.";
+    }else {
+        $row = $result->fetch_assoc();
+        $ID_korisnika = $row['ID_korisnika']; 
+        $sql = "INSERT INTO nove_lozinke(ID_korisnika,kod)
+                VALUES('$ID_korisnika','$kod')"; 
+        $conn->query($sql); 
     }
 
     if ($loginEmail === "") {

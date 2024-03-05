@@ -169,6 +169,7 @@
     </nav>
 </header>
 <!--FORMA-->
+<div class="drzi">
 <div class="wrapper <?php echo $wrapper_class;?>">
     <span class="iks"><ion-icon name="close"></ion-icon></span>
     <div class="form-box login">
@@ -246,6 +247,7 @@
             
         </form>
     </div>
+</div>
 </div>
 <!-- KRAJ FORME -->
 

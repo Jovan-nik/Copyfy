@@ -90,9 +90,8 @@
 /*FORMA*/
 .wrapper{
     position:absolute;
-    right:760px;
     width:400px;
-    top:320px;
+
     height:440px;
     background: transparent;
     border:2px solid rgba(255, 255, 255, 0.5);
@@ -320,7 +319,7 @@
     width:600px;
     height:600px;
 }
-.resetDrzi{
+.drzi{
     height:100vh;
     width:100%;
     display:flex;

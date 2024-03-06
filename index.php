@@ -12,16 +12,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copyfy</title>
-
-    <link rel="stylesheet" href="style.css">
+    <title>Redditfy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <?php 
         
             //include "novaLozinka.php";
-            include "registracija.php";
-            include "login.php";
+            include "./handlers/registracija.php";
+            include "./handlers/login.php";
             $registration_message = "";
             $login_message="";
             $wrapper_class="";
@@ -158,18 +159,69 @@
             }
 ?>
 <header>
-    <h2 class="logo">Copyfy</h2>
+    <h2 class="logo">Redditfy</h2>
     <nav class="navigacija">
+    <?php if ($session_active) { ?>
+            <a href="pages/nova_objava.php">Nova objava</a>
+            <a href="#">Pretraga</a>
+            <a href="#">Tvoje objave</a>
 
-        <a href="#">Pocetna</a>
-        <a href="#">Pretraga</a>
-        <a href="#">Tvoja biblioteka</a>
-     
-        <button id="<?php echo $logoutId; ?>" class="dugmeLogin"><?php echo isset($_SESSION["logged_in_korisnik"]["username"]) ? $_SESSION["logged_in_korisnik"]["username"] : "Uloguj se"; ?></button>
+            <button id="<?php echo $logoutId; ?>" class="dugmeLogin"><?php echo isset($_SESSION["logged_in_korisnik"]["username"]) ? $_SESSION["logged_in_korisnik"]["username"] : "Uloguj se"; ?></button>
+            <?php } else { ?>
+                <button id="<?php echo $logoutId; ?>" class="dugmeLogin"><?php echo isset($_SESSION["logged_in_korisnik"]["username"]) ? $_SESSION["logged_in_korisnik"]["username"] : "Uloguj se"; ?></button>
+            <?php } ?>
     </nav>
 </header>
 <!--FORMA-->
-<div class="drzi">
+
+
+<div class="drzi col-12">
+<div class="meni col-3" >
+        <ul>
+            <h3> <ion-icon name="home-outline"></ion-icon>Home </h3>
+            <h3><ion-icon name="arrow-up-outline"></ion-icon>Popularno</h3>
+            <br>
+            <p><ion-icon name="desktop-outline"></ion-icon>Programiranje</p>
+            <p><ion-icon name="football-outline"></ion-icon>Sport</p>
+            <p><ion-icon name="game-controller-outline"></ion-icon>Gaming</p>
+            <p><ion-icon name="analytics-outline"></ion-icon>Business</p>
+            <h3 id="vise">Ostalo</h3>
+            <div id="dodatno">
+            <p><ion-icon name="wallet-outline"></ion-icon>Crypto</p>
+            <p><ion-icon name="star-outline"></ion-icon>Poznati</p>
+            <p><ion-icon name="car-sport-outline"></ion-icon>Kola</p>
+            <p><ion-icon name="calendar-outline"></ion-icon>Istorija</p>
+            <p><ion-icon name="shirt-outline"></ion-icon>Moda</p>
+            <p><ion-icon name="telescope-outline"></ion-icon>Astronomija</p>
+            <p><ion-icon name="musical-notes-outline"></ion-icon>Muzika</p>
+            <p><ion-icon name="film-outline"></ion-icon>Filmovi</p>
+            <p><ion-icon name="flask-outline"></ion-icon>Nauka</p>
+            <p><ion-icon name="flask-outline"></ion-icon>Putovanja</p>
+            <p><ion-icon name="school-outline"></ion-icon>Obrazovanje</p>
+            <p><ion-icon name="rainy-outline"></ion-icon>Prognoza</p>
+            <p><ion-icon name="construct-outline"></ion-icon>Uradi sam</p>
+            <p><ion-icon name="restaurant-outline"></ion-icon>Ishrana</p>
+            <p><ion-icon name="pulse-outline"></ion-icon>Medicina</p> 
+            </div>     
+            <!--<h1>Dodaj novu</h1>     -->
+        </ul>
+</div>
+
+<div class="content col-9">
+        <div class="glavneTeme">
+            <div >Prvi</div>
+            <div >Drugi</div>
+            <div >Treći</div>
+            <div >Četvrti</div>
+        </div>
+        <div class="postovi">
+            <div class="col-8 objave"></div>
+            <div id="zajednica" class="zajednice "> 
+                Najjace zajednice na reditu
+            </div>
+        </div>
+</div>
+
 <div class="wrapper <?php echo $wrapper_class;?>">
     <span class="iks"><ion-icon name="close"></ion-icon></span>
     <div class="form-box login">
@@ -248,13 +300,13 @@
         </form>
     </div>
 </div>
-</div>
-<!-- KRAJ FORME -->
 
-<script src="logoutDugme.js"></script>
-<script src="novaLozinka.js"></script>
+<!-- KRAJ FORME -->
+<script src="js/dodatno.js"></script>
+<script src="js/logoutDugme.js"></script>
+<script src="js/novaLozinka.js"></script>
 <?php if ($include_js) { ?>
-<script src="main.js"></script>
+<script src="js/main.js"></script>
 <?php } ?>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

@@ -8,7 +8,7 @@ document.getElementById("zaboraviliSteLozinku").addEventListener("click", functi
         document.getElementById("login_emailgreska").textContent = "Morate uneti email adresu.";
     } else {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "novaLozinka.php");
+        xhr.open("POST", "../pages/novaLozinka.php");
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {

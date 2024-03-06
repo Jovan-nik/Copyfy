@@ -10,7 +10,7 @@
             logoutButton.onclick = function() {
                 // Ovde dodajemo AJAX zahtev za logout.php
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", "logout.php", true);
+                xhr.open("GET", "../handlers/logout.php", true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         // Stranica je uspešno odjavila korisnika, sada osvežavamo stranicu

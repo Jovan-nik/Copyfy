@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2024 at 11:14 PM
+-- Generation Time: Mar 07, 2024 at 12:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,7 @@ CREATE TABLE `korisnik` (
 --
 
 INSERT INTO `korisnik` (`ID_korisnika`, `email`, `user_name`, `password`, `registration_time`) VALUES
-(1, 'nikodinovicjovan1@gmail.com', 'Jovance', '$2y$10$wUztWxfa7a057qfIhfV66Ocm9D5Brn4pAbtC4GPbNtBkYonLl.71e', '2024-03-02 18:34:45'),
+(1, 'nikodinovicjovan1@gmail.com', 'Jovance', '$2y$10$YEcJN1RFsskO.FYCM9nfdelUsP1XSsgX/T2OPo0pRlu2/smKVHera', '2024-03-02 18:34:45'),
 (2, 'nikodinovicjovan1@gmail.com', 'Jovance', '$2y$10$CH/fFoQQsH11oTG8Bg36Ee3A/SFnhr2IzasEkbyDNhuenS/.55ZKC', '2024-03-02 18:35:07'),
 (3, 'nikodinovicjovan1@gmail.com', 'Jovance', '$2y$10$QxJ/PUu2YU4hxaRsBFVWFuteR.Be/792R.ElhVkbPtSLHiSEDvMHO', '2024-03-02 18:36:45'),
 (4, 'lukamarkovic2017@gmai.com', 'Bordzija', '$2y$10$DNtZRljVnR5DIR7q/H.99eO8VwO66txY04Akc11P3dMjhvGBAyKFe', '2024-03-02 19:41:12'),
@@ -58,6 +58,98 @@ INSERT INTO `korisnik` (`ID_korisnika`, `email`, `user_name`, `password`, `regis
 (15, 'mrumenic@gmail.com', 'Rumenige', '$2y$10$ywV4.Ss74pC/KNBYY2XNmeHCxR94hcAD5YOedkuc88rLTXYVnWkV6', '2024-03-04 16:02:13'),
 (23, 'zaretan@gmail.com', 'Zare', '$2y$10$N6dclLwrofTG6HGzM21ryu8GryP1dF.Bkt93ByiF0NnMTHzW77PaC', '2024-03-04 20:10:52');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nove_lozinke`
+--
+
+CREATE TABLE `nove_lozinke` (
+  `ID_nove_lozinke` int(11) NOT NULL,
+  `ID_korisnika` int(11) NOT NULL,
+  `kod` varchar(10) NOT NULL,
+  `vreme_kreiranja` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `nove_lozinke`
+--
+
+INSERT INTO `nove_lozinke` (`ID_nove_lozinke`, `ID_korisnika`, `kod`, `vreme_kreiranja`) VALUES
+(2, 1, 'sFZTmY', '2024-03-05 20:23:51'),
+(3, 1, 'sOIKb5', '2024-03-05 20:42:13'),
+(4, 1, 'qyPOGM', '2024-03-05 22:03:41'),
+(5, 1, 'hZOVqQ', '2024-03-05 22:13:28'),
+(6, 1, '2dTChv', '2024-03-05 22:16:34'),
+(7, 1, 'JzsNCl', '2024-03-05 22:20:58'),
+(8, 1, '95sN9u', '2024-03-05 22:24:19'),
+(9, 1, 'NTy2kD', '2024-03-05 22:44:55'),
+(10, 1, '2X8WPu', '2024-03-05 22:47:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `objava`
+--
+
+CREATE TABLE `objava` (
+  `ID_objave` int(11) NOT NULL,
+  `ID_teme` int(11) NOT NULL,
+  `ID_korisnika` int(11) NOT NULL,
+  `naslov` varchar(50) NOT NULL,
+  `tekst` text NOT NULL,
+  `slika` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tema`
+--
+
+CREATE TABLE `tema` (
+  `ID_teme` int(11) NOT NULL,
+  `naziv` varchar(50) NOT NULL,
+  `opis` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `tema`
+--
+
+INSERT INTO `tema` (`ID_teme`, `naziv`, `opis`) VALUES
+(1, 'Programiranje', 'Tema za programiranje, veb programiranje i sve ostalo te sorte'),
+(2, 'Sport', 'Tema za sport'),
+(3, 'Gaming', 'Tema za gejming'),
+(4, 'Business', 'Tema za posao/biznis'),
+(5, 'Crypto', 'Tema za kripto valute'),
+(6, 'Poznati', 'O poznatima iz regiona'),
+(7, 'Kola', 'Za ljubitelje automobila'),
+(8, 'Istorija', 'Za istoricare'),
+(9, 'Moda', 'Za modne fanatike'),
+(10, 'Astronomija', 'Za astronome'),
+(11, 'Muzika', 'Za muzicare'),
+(12, 'Filmovi', 'Sedma umetnost'),
+(13, 'Nauka', 'Za naucnike'),
+(14, 'Putovanja', 'Za turizam'),
+(15, 'Obrazovanje', 'Edukacija'),
+(16, 'Prognoza', 'Meteorologija'),
+(17, 'Uradi sam', 'DIY kod kuce'),
+(18, 'Ishrana', 'Za nutricioniste'),
+(19, 'Medicina', 'Medicina');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `up_vote`
+--
+
+CREATE TABLE `up_vote` (
+  `ID_upvote` int(11) NOT NULL,
+  `ID_korisnika` int(11) NOT NULL,
+  `ID_objave` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 --
 -- Indexes for dumped tables
 --
@@ -69,6 +161,31 @@ ALTER TABLE `korisnik`
   ADD PRIMARY KEY (`ID_korisnika`);
 
 --
+-- Indexes for table `nove_lozinke`
+--
+ALTER TABLE `nove_lozinke`
+  ADD PRIMARY KEY (`ID_nove_lozinke`),
+  ADD KEY `ID_korisnika` (`ID_korisnika`);
+
+--
+-- Indexes for table `objava`
+--
+ALTER TABLE `objava`
+  ADD PRIMARY KEY (`ID_objave`);
+
+--
+-- Indexes for table `tema`
+--
+ALTER TABLE `tema`
+  ADD PRIMARY KEY (`ID_teme`);
+
+--
+-- Indexes for table `up_vote`
+--
+ALTER TABLE `up_vote`
+  ADD PRIMARY KEY (`ID_upvote`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -77,6 +194,40 @@ ALTER TABLE `korisnik`
 --
 ALTER TABLE `korisnik`
   MODIFY `ID_korisnika` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `nove_lozinke`
+--
+ALTER TABLE `nove_lozinke`
+  MODIFY `ID_nove_lozinke` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `objava`
+--
+ALTER TABLE `objava`
+  MODIFY `ID_objave` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tema`
+--
+ALTER TABLE `tema`
+  MODIFY `ID_teme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `up_vote`
+--
+ALTER TABLE `up_vote`
+  MODIFY `ID_upvote` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `nove_lozinke`
+--
+ALTER TABLE `nove_lozinke`
+  ADD CONSTRAINT `nove_lozinke_ibfk_1` FOREIGN KEY (`ID_korisnika`) REFERENCES `korisnik` (`ID_korisnika`);
 --
 -- Database: `phpmyadmin`
 --
@@ -144,6 +295,13 @@ CREATE TABLE `pma__designer_settings` (
   `settings_data` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Settings related to Designer';
 
+--
+-- Dumping data for table `pma__designer_settings`
+--
+
+INSERT INTO `pma__designer_settings` (`username`, `settings_data`) VALUES
+('root', '{\"snap_to_grid\":\"off\",\"angular_direct\":\"direct\",\"relation_lines\":\"true\"}');
+
 -- --------------------------------------------------------
 
 --
@@ -157,6 +315,13 @@ CREATE TABLE `pma__export_templates` (
   `template_name` varchar(64) NOT NULL,
   `template_data` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved export templates';
+
+--
+-- Dumping data for table `pma__export_templates`
+--
+
+INSERT INTO `pma__export_templates` (`id`, `username`, `export_type`, `template_name`, `template_data`) VALUES
+(1, 'root', 'server', 'redditfy', '{\"quick_or_custom\":\"quick\",\"what\":\"sql\",\"db_select[]\":[\"copyfy\",\"phpmyadmin\",\"test\"],\"aliases_new\":\"\",\"output_format\":\"sendit\",\"filename_template\":\"@SERVER@\",\"remember_template\":\"on\",\"charset\":\"utf-8\",\"compression\":\"none\",\"maxsize\":\"\",\"codegen_structure_or_data\":\"data\",\"codegen_format\":\"0\",\"csv_separator\":\",\",\"csv_enclosed\":\"\\\"\",\"csv_escaped\":\"\\\"\",\"csv_terminated\":\"AUTO\",\"csv_null\":\"NULL\",\"csv_columns\":\"something\",\"csv_structure_or_data\":\"data\",\"excel_null\":\"NULL\",\"excel_columns\":\"something\",\"excel_edition\":\"win\",\"excel_structure_or_data\":\"data\",\"json_structure_or_data\":\"data\",\"json_unicode\":\"something\",\"latex_caption\":\"something\",\"latex_structure_or_data\":\"structure_and_data\",\"latex_structure_caption\":\"Structure of table @TABLE@\",\"latex_structure_continued_caption\":\"Structure of table @TABLE@ (continued)\",\"latex_structure_label\":\"tab:@TABLE@-structure\",\"latex_relation\":\"something\",\"latex_comments\":\"something\",\"latex_mime\":\"something\",\"latex_columns\":\"something\",\"latex_data_caption\":\"Content of table @TABLE@\",\"latex_data_continued_caption\":\"Content of table @TABLE@ (continued)\",\"latex_data_label\":\"tab:@TABLE@-data\",\"latex_null\":\"\\\\textit{NULL}\",\"mediawiki_structure_or_data\":\"data\",\"mediawiki_caption\":\"something\",\"mediawiki_headers\":\"something\",\"htmlword_structure_or_data\":\"structure_and_data\",\"htmlword_null\":\"NULL\",\"ods_null\":\"NULL\",\"ods_structure_or_data\":\"data\",\"odt_structure_or_data\":\"structure_and_data\",\"odt_relation\":\"something\",\"odt_comments\":\"something\",\"odt_mime\":\"something\",\"odt_columns\":\"something\",\"odt_null\":\"NULL\",\"pdf_report_title\":\"\",\"pdf_structure_or_data\":\"data\",\"phparray_structure_or_data\":\"data\",\"sql_include_comments\":\"something\",\"sql_header_comment\":\"\",\"sql_use_transaction\":\"something\",\"sql_compatibility\":\"NONE\",\"sql_structure_or_data\":\"structure_and_data\",\"sql_create_table\":\"something\",\"sql_auto_increment\":\"something\",\"sql_create_view\":\"something\",\"sql_create_trigger\":\"something\",\"sql_backquotes\":\"something\",\"sql_type\":\"INSERT\",\"sql_insert_syntax\":\"both\",\"sql_max_query_size\":\"50000\",\"sql_hex_for_binary\":\"something\",\"sql_utc_time\":\"something\",\"texytext_structure_or_data\":\"structure_and_data\",\"texytext_null\":\"NULL\",\"yaml_structure_or_data\":\"data\",\"\":null,\"as_separate_files\":null,\"csv_removeCRLF\":null,\"excel_removeCRLF\":null,\"json_pretty_print\":null,\"htmlword_columns\":null,\"ods_columns\":null,\"sql_dates\":null,\"sql_relation\":null,\"sql_mime\":null,\"sql_disable_fk\":null,\"sql_views_as_tables\":null,\"sql_metadata\":null,\"sql_drop_database\":null,\"sql_drop_table\":null,\"sql_if_not_exists\":null,\"sql_simple_view_export\":null,\"sql_view_current_user\":null,\"sql_or_replace_view\":null,\"sql_procedure_function\":null,\"sql_truncate\":null,\"sql_delayed\":null,\"sql_ignore\":null,\"texytext_columns\":null}');
 
 -- --------------------------------------------------------
 
@@ -226,7 +391,7 @@ CREATE TABLE `pma__recent` (
 --
 
 INSERT INTO `pma__recent` (`username`, `tables`) VALUES
-('root', '[{\"db\":\"copyfy\",\"table\":\"korisnik\"}]');
+('root', '[{\"db\":\"copyfy\",\"table\":\"tema\"},{\"db\":\"copyfy\",\"table\":\"objava\"},{\"db\":\"copyfy\",\"table\":\"up_vote\"},{\"db\":\"copyfy\",\"table\":\"nove_lozinke\"},{\"db\":\"copyfy\",\"table\":\"korisnik\"}]');
 
 -- --------------------------------------------------------
 
@@ -333,7 +498,7 @@ CREATE TABLE `pma__userconfig` (
 --
 
 INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
-('root', '2024-03-04 22:14:44', '{\"Console\\/Mode\":\"show\"}');
+('root', '2024-03-06 22:28:42', '{\"Console\\/Mode\":\"show\"}');
 
 -- --------------------------------------------------------
 
@@ -502,7 +667,7 @@ ALTER TABLE `pma__column_info`
 -- AUTO_INCREMENT for table `pma__export_templates`
 --
 ALTER TABLE `pma__export_templates`
-  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pma__history`

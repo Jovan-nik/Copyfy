@@ -1,5 +1,5 @@
 <?php
-include "konekcija.php";
+include "../handlers/konekcija.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
    #GENERISE KOD
    $znakovi = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

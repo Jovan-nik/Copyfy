@@ -178,35 +178,57 @@
 <div class="drzi col-12">
 <div class="meni col-3" >
         <ul>
+        
             <h3> <ion-icon name="home-outline"></ion-icon>Home </h3>
+        
+        
             <h3><ion-icon name="arrow-up-outline"></ion-icon>Popularno</h3>
-            <br>
-            <p><ion-icon name="desktop-outline"></ion-icon>Programiranje</p>
-            <p><ion-icon name="football-outline"></ion-icon>Sport</p>
-            <p><ion-icon name="game-controller-outline"></ion-icon>Gaming</p>
-            <p><ion-icon name="analytics-outline"></ion-icon>Business</p>
+        
+        <br>
+        <?php
+        $conn = connect();
+        $sql = "SELECT naziv, ion_icon FROM tema";
+        $result = $conn->query($sql);
+        $counter = 0;
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if ($counter < 4) {
+                    echo "<p><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
+                } else {
+                    break;
+                }
+                $counter++;
+            }
+        }
+        ?>
+       
             <h3 id="vise">Ostalo</h3>
-            <div id="dodatno">
-            <p><ion-icon name="wallet-outline"></ion-icon>Crypto</p>
-            <p><ion-icon name="star-outline"></ion-icon>Poznati</p>
-            <p><ion-icon name="car-sport-outline"></ion-icon>Kola</p>
-            <p><ion-icon name="calendar-outline"></ion-icon>Istorija</p>
-            <p><ion-icon name="shirt-outline"></ion-icon>Moda</p>
-            <p><ion-icon name="telescope-outline"></ion-icon>Astronomija</p>
-            <p><ion-icon name="musical-notes-outline"></ion-icon>Muzika</p>
-            <p><ion-icon name="film-outline"></ion-icon>Filmovi</p>
-            <p><ion-icon name="flask-outline"></ion-icon>Nauka</p>
-            <p><ion-icon name="flask-outline"></ion-icon>Putovanja</p>
-            <p><ion-icon name="school-outline"></ion-icon>Obrazovanje</p>
-            <p><ion-icon name="rainy-outline"></ion-icon>Prognoza</p>
-            <p><ion-icon name="construct-outline"></ion-icon>Uradi sam</p>
-            <p><ion-icon name="restaurant-outline"></ion-icon>Ishrana</p>
-            <p><ion-icon name="pulse-outline"></ion-icon>Medicina</p> 
-            </div>     
-            <!--<h1>Dodaj novu</h1>     -->
-        </ul>
+        
+       
+        <div id="dodatno">
+            <?php
+            $conn = connect();
+            $sql = "SELECT naziv, ion_icon FROM tema";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $counter = 0;
+                while ($row = $result->fetch_assoc()) {
+                    if ($counter >= 4) {
+                        echo "<li><p><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p></li>";
+                    }
+                    $counter++;
+                }
+            }
+            
+            if ($session_active) {
+                echo "<h3><ion-icon name='add-outline'></ion-icon><a href='./pages/nova_tema.php'>Nova tema</a></h3>";
+            }
+            
+            ?> 
+            
+        </div>
+    </ul>
 </div>
-
 <div class="content col-9">
         <div class="glavneTeme">
             <div >Prvi</div>

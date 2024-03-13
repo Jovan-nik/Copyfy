@@ -457,3 +457,11 @@ h3{
     width:100px;
 
 }
+#slika{
+    background-color: rgb(22,41,56);
+    color:white;
+}
+#slika:hover{
+    background-color: white;
+    color:black;
+}

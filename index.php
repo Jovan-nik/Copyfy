@@ -3,7 +3,9 @@
     $session_active = isset($_SESSION["logged_in_korisnik"]);
     $include_js = !$session_active;
     $logoutId="";
-    if($session_active){$logoutId="dugmeLogout";}
+    if($session_active){$logoutId="dugmeLogout";
+        $loggedInKorisnik_id=$_SESSION["logged_in_korisnik"]["id"];
+    }
 
             
 ?>
@@ -12,7 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redditfy</title>
+    <title>Reddify</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -159,12 +161,12 @@
             }
 ?>
 <header>
-    <h2 class="logo">Redditfy</h2>
+    <h2 class="logo">Reddify</h2>
     <nav class="navigacija">
     <?php if ($session_active) { ?>
             <a href="pages/nova_objava.php">Nova objava</a>
             <a href="#">Pretraga</a>
-            <a href="#">Tvoje objave</a>
+            <a href="#" data-ulogovani-korisnik-id="<?php echo $loggedInKorisnik_id?>" id="tvoje_objave">Tvoje objave</a>
 
             <button id="<?php echo $logoutId; ?>" class="dugmeLogin"><?php echo isset($_SESSION["logged_in_korisnik"]["username"]) ? $_SESSION["logged_in_korisnik"]["username"] : "Uloguj se"; ?></button>
             <?php } else { ?>
@@ -187,13 +189,13 @@
         <br>
         <?php
         $conn = connect();
-        $sql = "SELECT naziv, ion_icon FROM tema";
+        $sql = "SELECT naziv, ion_icon,ID_teme FROM tema";
         $result = $conn->query($sql);
         $counter = 0;
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 if ($counter < 4) {
-                    echo "<p><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
+                    echo "<p id='" . $row['ID_teme'] . "'><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
                 } else {
                     break;
                 }
@@ -208,13 +210,13 @@
         <div id="dodatno">
             <?php
             $conn = connect();
-            $sql = "SELECT naziv, ion_icon FROM tema";
+            $sql = "SELECT naziv, ion_icon,ID_teme FROM tema";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 $counter = 0;
                 while ($row = $result->fetch_assoc()) {
                     if ($counter >= 4) {
-                        echo "<li><p><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p></li>";
+                        echo "<p id='" . $row['ID_teme'] . "'><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
                     }
                     $counter++;
                 }
@@ -237,8 +239,33 @@
             <div >Četvrti</div>
         </div>
         <div class="postovi">
-            <div class="col-8 objave"></div>
-            <div id="zajednica" class="zajednice "> 
+            <div class="col-8 objave">
+            <?php
+            // Izvrši upit za dohvat objava sa svim potrebnim informacijama
+            $conn = connect();
+            $sql = "SELECT objava.*, korisnik.user_name 
+                    FROM objava 
+                    JOIN korisnik ON objava.ID_korisnika = korisnik.ID_korisnika";
+            $result = $conn->query($sql);
+
+            // Prikazi objave ako ima rezultata
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    // Prikazi naslov, sliku, tekst objave i ime korisnika
+                    echo "<div class='objava' style='cursor:pointer;' id-tema='" . $row['ID_teme'] . "' id-korisnika='".$row['ID_korisnika']."'>";
+                    echo "<h2 style='text-align:center;'>" . $row['naslov'] . "</h2>";
+                    $base64_image = base64_encode($row['slika']);
+                    echo "<img  src='data:image/jpeg;base64," . $base64_image . "' alt='Slika objave'>";
+                    echo "<p style='font-size:18px;'>Opis : " . $row['tekst'] . "</p>";
+                    echo "<p style='font-size:18px; text-align:end;'>Objavio/la: " . $row['user_name'] . "</p>";
+                    echo "</div>";
+                }
+            } else {
+                echo "Nema objava za prikaz.";
+            }
+            ?>
+            </div>
+            <div id="zajednica" class="zajednice"> 
                 Najjace zajednice na reditu
             </div>
         </div>

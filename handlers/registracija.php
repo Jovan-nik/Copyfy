@@ -20,7 +20,9 @@ function registracija($username, $email, $password)
     $sql = "INSERT INTO korisnik(email,user_name,password,registration_time)
             VALUES('$email', '$username', '$hashed_password', '$date')";
     if ($conn->query($sql) === TRUE) {
+        $id = $conn->insert_id;
         $_SESSION["logged_in_korisnik"] = array(
+            "id" => $id,
             "email" => $email,
             "username" => $username,
         );

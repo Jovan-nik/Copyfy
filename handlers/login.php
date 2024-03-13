@@ -14,6 +14,7 @@ function login($email, $password)
                
             if (password_verify($password, $row["password"])) {
                 $_SESSION["logged_in_korisnik"] = array(
+                    "id" => $row["ID_korisnika"],
                     "email" => $row["email"],
                     "username" => $row["user_name"],
                 );

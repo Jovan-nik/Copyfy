@@ -358,10 +358,6 @@
     flex-direction: row;
     justify-content: space-around;
 }
-.objave{
-    height:4000px;
-    background-color: rgb(36, 8, 8);
-}
 .zajednice{
     width:23%;
     display: flex;
@@ -370,7 +366,6 @@
     color:white;
     font-weight: 400;
     border-radius: 5px;
-    position:sticky;
     top:70px;
     height:360px;
     background-color: rgb(4, 9, 10);
@@ -429,6 +424,9 @@ h3{
 .meni h3:hover, .meni p:hover {
     background-color: rgb(19,31,35);
 }
+.meni p.active {
+    background-color: rgb(19, 31, 35);
+}
 .content{
     padding-top: 0;
     padding-left: 30px;
@@ -459,9 +457,55 @@ h3{
 }
 #slika{
     background-color: rgb(22,41,56);
-    color:white;
+    color:white;align-items: ba;
 }
 #slika:hover{
     background-color: white;
     color:black;
+}
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: rgb(22,41,56);
+    border: 2px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+select:after {
+    content: "\25BC";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+select::-ms-expand {
+    display: none;
+}
+.objava {
+    color: white; /* Bijeli tekst */
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Dodatni stil za smanjenje margine između objava */
+.objave .objava:last-child {
+    margin-bottom: 0;
+}
+.objava img {
+    max-width: 100%;
+    height: auto;
+    filter: brightness(110%) contrast(120%); /* Prilagodite ove vrijednosti prema potrebi */
+}
+
+/* Dodajte obrub slike */
+.objava img {
+    border: 2px solid white; /* Bijeli obrub */
+    border-radius: 5px; /* Zaobljeni rubovi */
+    overflow: hidden; /* Osigurava da se obrub prikazuje samo oko slike */
 }

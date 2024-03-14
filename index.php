@@ -181,7 +181,7 @@
 <div class="meni col-3" >
         <ul>
         
-            <h3> <ion-icon name="home-outline"></ion-icon>Home </h3>
+            <h3 id="home"> <ion-icon name="home-outline"></ion-icon>Home </h3>
         
         
             <h3><ion-icon name="arrow-up-outline"></ion-icon>Popularno</h3>
@@ -258,6 +258,7 @@
                     echo "<img  src='data:image/jpeg;base64," . $base64_image . "' alt='Slika objave'>";
                     echo "<p style='font-size:18px;'>Opis : " . $row['tekst'] . "</p>";
                     echo "<p style='font-size:18px; text-align:end;'>Objavio/la: " . $row['user_name'] . "</p>";
+                    if($session_active) echo "<ion-icon class='upvote' name='chevron-up-circle-outline' data-state='outline' data-objava-id='" . $row['ID_objave'] . "' data-korisnik-id='" . $loggedInKorisnik_id . "'></ion-icon>";
                     echo "</div>";
                 }
             } else {
@@ -266,7 +267,6 @@
             ?>
             </div>
             <div id="zajednica" class="zajednice"> 
-                Najjace zajednice na reditu
             </div>
         </div>
 </div>
@@ -351,12 +351,17 @@
 </div>
 
 <!-- KRAJ FORME -->
+
 <script src="js/dodatno.js"></script>
 <script src="js/logoutDugme.js"></script>
 <script src="js/novaLozinka.js"></script>
+
 <?php if ($include_js) { ?>
 <script src="js/main.js"></script>
 <?php } ?>
+<?php if (!$include_js) { ?>
+        <script src="js/upvote.js"></script>
+    <?php } ?>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

@@ -17,7 +17,7 @@
   
   html, body {
     height: 100%;
-
+    -webkit-user-select: none;
   }
   body::-webkit-scrollbar{
     display: none;
@@ -98,10 +98,9 @@
     width:400px;
 
     height:440px;
-    background: transparent;
+    background:rgb(18,23,23);
     border:2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
-    backdrop-filter: blur(20px);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
     display:flex;
     align-items: center;
@@ -273,14 +272,14 @@
     border-radius: 5px;
     height:360px;
     width:230px;
-    background-color:transparent;
+    background-color:rgb(18,23,23);
     top:60px;
     right:50px;
     position:fixed;
     border:2px solid white;
     display:flex;
     align-items:center;
-    justify-content: end; 
+    justify-content: space-around; 
     z-index: 99;
     flex-direction: column-reverse;
 }
@@ -354,11 +353,13 @@
 
 }
 .postovi{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 .zajednice{
+    margin-left: 30px;
     width:23%;
     display: flex;
     justify-content: center;
@@ -367,8 +368,12 @@
     font-weight: 400;
     border-radius: 5px;
     top:70px;
-    height:360px;
-    background-color: rgb(4, 9, 10);
+    height:400px;
+     position: sticky !important;
+     background-image: url("../images/reklama2.png");
+     background-position: center;
+     background-size: cover;
+     
 }
 
 .meni ul{
@@ -451,13 +456,11 @@ h3{
     border-radius: 15px;
     background-color: red;
 }
-#iconSelect{
-    width:100px;
-
-}
 #slika{
+    height:40px;
     background-color: rgb(22,41,56);
-    color:white;align-items: ba;
+    color:white;
+
 }
 #slika:hover{
     background-color: white;
@@ -488,24 +491,46 @@ select::-ms-expand {
     display: none;
 }
 .objava {
-    color: white; /* Bijeli tekst */
+    position: relative;
+    color: white;
     padding: 20px;
     margin-bottom: 20px;
 }
-
-/* Dodatni stil za smanjenje margine između objava */
 .objave .objava:last-child {
     margin-bottom: 0;
 }
 .objava img {
     max-width: 100%;
     height: auto;
-    filter: brightness(110%) contrast(120%); /* Prilagodite ove vrijednosti prema potrebi */
+    filter: brightness(110%) contrast(120%); 
 }
-
-/* Dodajte obrub slike */
 .objava img {
-    border: 2px solid white; /* Bijeli obrub */
-    border-radius: 5px; /* Zaobljeni rubovi */
-    overflow: hidden; /* Osigurava da se obrub prikazuje samo oko slike */
+    border: 2px solid white;
+    border-radius: 5px;
+    overflow: hidden;
+}
+/* upvote css i animacija */
+.upvote {
+    position: absolute;
+    font-weight: 400;
+    bottom: 120px;
+    right: -60px;
+    font-size: 60px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+.upvote.clicked {
+    animation: jump 0.2s; 
+}
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }

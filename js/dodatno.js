@@ -35,6 +35,7 @@ var prikazano = false;
 // });
 //Kod koji podesava visinu diva sa objavama da odgovara ukupnom broju objava i plus filtrira objave preko tema
 document.addEventListener("DOMContentLoaded", function() {
+
     
     function podesiVisinuObjava() {
 
@@ -49,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.objave').style.height = ukupnaVisina + 'px';
     }
 
-    window.addEventListener('load', podesiVisinuObjava);
 
     const teme = document.querySelectorAll(".meni p");
     teme.forEach(tema => {
@@ -74,9 +74,11 @@ document.addEventListener("DOMContentLoaded", function() {
             temaElement.classList.add('active');
 
             podesiVisinuObjava();
+            console.log(podesiVisinuObjava());
         });
     });
 });
+
 document.addEventListener("DOMContentLoaded", function() {
     var tvoje_objave_link = document.getElementById("tvoje_objave");
     var ulogovani_korisnik_id = tvoje_objave_link.getAttribute("data-ulogovani-korisnik-id");
@@ -93,7 +95,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 objava.style.display = "none";
             } else {
                 objava.style.display = "block";
+            
             }
+            window.scrollTo(0, 0);
         });
+    });
+});
+//refresha kad se stisne home
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("home").addEventListener("click", function() {
+        location.reload();
     });
 });

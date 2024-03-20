@@ -11,29 +11,6 @@ var prikazano = false;
             prikazano = false;
         }
     });
-//JS ZA OBJAVU PREKO CELE STRANE
-// window.addEventListener('load', function() {
-//     // Pronađite sve elemente sa klasom 'objava'
-//     var objave = document.querySelectorAll('.objava');
-
-//     // Iterirajte kroz svaku objavu
-//     objave.forEach(function(objava) {
-        
-//         // Dodajte event listener za klik na svaku objavu
-//         objava.addEventListener('click', function() {
-
-//             // Postavite stil diva objave da zauzima celu visinu ekrana
-//             objava.style.height = '100vh'; // 100% visine ekrana
-//             objava.style.position = 'fixed'; // Postavite poziciju na fiksnu kako bi pokrili celu stranicu
-//             objava.style.top = '0'; // Postavite gornji rub na 0
-//             objava.style.left = '0'; // Postavite levi rub na 0
-//             objava.style.width = '100%'; // Postavite širinu na 100%
-//             objava.style.zIndex = '9999'; // Postavite z-indeks na visok broj kako bi bila iznad ostalog sadržaja
-//             objava.style.overflowY = 'auto'; // Omogućite skrolovanje ako je sadržaj prevelik za visinu ekrana
-//         });
-//     });
-// });
-//Kod koji podesava visinu diva sa objavama da odgovara ukupnom broju objava i plus filtrira objave preko tema
 document.addEventListener("DOMContentLoaded", function() {
 
     
@@ -101,9 +78,136 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
-//refresha kad se stisne home
+//refresha kad se stisne home i ime
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("home").addEventListener("click", function() {
         location.reload();
     });
 });
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("logo").addEventListener("click", function() {
+        location.reload();
+    });
+});
+//SEARCH
+function createSearchBar() {
+    var searchBar = document.createElement('div');
+    searchBar.id = 'searchBar';
+    searchBar.style.display = 'none';
+
+    var searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Pretraži...';
+    searchInput.className = 'searchInput'; 
+
+    var searchIcon = document.createElement('ion-icon');
+    searchIcon.setAttribute('name', 'search-outline');
+
+    searchBar.appendChild(searchInput);
+    searchBar.appendChild(searchIcon);
+
+    document.querySelector('header').appendChild(searchBar);
+
+    document.getElementById('toggleSearch').addEventListener('click', function(event) {
+        searchBar.style.display = (searchBar.style.display === 'none' || searchBar.style.display === '') ? 'block' : 'none';
+        event.stopPropagation(); 
+    });
+
+    document.addEventListener('click', function(event) {
+        var clickedElement = event.target;
+        if (!searchBar.contains(clickedElement)) {
+            searchBar.style.display = 'none';
+            searchInput.value = ''; 
+            clearHighlightedText(); 
+        }
+    });
+
+    searchInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            search();
+        }
+    });
+}
+
+function clearHighlightedText() {
+    var markedElements = document.querySelectorAll('mark');
+    markedElements.forEach(function(element) {
+        element.outerHTML = element.innerHTML;
+    });
+}
+
+function search() {
+    var searchTerm = document.querySelector('.searchInput').value.trim();
+    var searchRegex = new RegExp(searchTerm, 'gi');
+    var foundText = false;
+
+    var allTextNodes = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var currentNode;
+
+    while (currentNode = allTextNodes.nextNode()) {
+        if (currentNode.parentNode.nodeName !== 'SCRIPT' && currentNode.parentNode.nodeName !== 'STYLE') {
+            var text = currentNode.nodeValue.trim();
+
+            if (searchRegex.test(text)) {
+                foundText = true;
+                var range = document.createRange();
+                range.setStart(currentNode, text.toLowerCase().indexOf(searchTerm.toLowerCase()));
+                range.setEnd(currentNode, text.toLowerCase().indexOf(searchTerm.toLowerCase()) + searchTerm.length);
+                var selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                currentNode.parentNode.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                break;
+            }
+        }
+    }
+
+
+    if (foundText && event.type === 'keypress' && event.key === 'Enter') {
+        event.preventDefault();
+    }
+}
+
+createSearchBar();
+//NISAM imao vremena da zavrsim svoju "kreativnu zamisao" trebao sam da uradim da kada se stisne na objavu da prekrije ceo ekran i da naravno da se 
+//to razradi jos malo i da se omoguci komentarisanje na objavu i odgovaranje na komentare kao i izmena same objave i komentara, ali nema veze
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const objave = document.querySelectorAll('.objava');
+
+//     objave.forEach(objava => {
+//         objava.addEventListener('click', function () {
+//             const fullscreenOverlay = document.createElement('div');
+//             fullscreenOverlay.classList.add('fullscreen-overlay');
+//             const fullscreenContent = document.createElement('div');
+//             fullscreenContent.classList.add('fullscreen-content');
+//             const backgroundImage = window.getComputedStyle(this).getPropertyValue('background-image');
+//             const backgroundImageUrl = backgroundImage.replace(/linear-gradient\(.*\),/g, '');
+//             const imagePath = backgroundImageUrl.substring(backgroundImageUrl.indexOf('images/'));
+//             const cleanedImagePath = imagePath.replace(/['"]+/g, '');
+//             const img = document.createElement('img');
+//             img.src = cleanedImagePath;
+
+//             img.style.maxWidth = '100%';
+//             img.style.maxHeight = '80vh';
+//             img.style.marginBottom = '20px';
+
+//             fullscreenContent.appendChild(img);
+
+//             fullscreenContent.innerHTML += this.innerHTML;
+
+//             fullscreenOverlay.appendChild(fullscreenContent);
+//             document.body.appendChild(fullscreenOverlay);
+
+//             fullscreenOverlay.addEventListener('click', function () {
+//                 this.remove();
+//             });
+//             fullscreenContent.addEventListener('click', function (e) {
+//                 e.stopPropagation();
+//             });
+
+//             fullscreenOverlay.style.display = 'block';
+//         });
+//     });
+// });

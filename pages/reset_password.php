@@ -80,8 +80,9 @@
     }
     ?>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" novalidate>
-<div class="drzi">
+<div style="top:-60px;" class="drzi">
 <div class="reset">
+            <h1 style="color:white; margin:10px;">Restartujte Vasu lozinku</h1>
             <div class="input-box">
                 <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                 <input type="password"  name="new_password" >

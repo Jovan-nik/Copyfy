@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["email"])) {
         $message = '<html><body style="text-align:center; height:150px; ">';
         $message .= '<h1>Zaboravili ste lozinku?</h1>';
         $message .= '<p>Kliknite na dugme ispod da biste resetovali lozinku:</p>';
-        $message .= '<a href="copyfy.com/reset_password.php?kod=' . $kod . '" target="_blank" style="height:30px; border-radius: 10px; background-color: green; color: white; padding: 10px; text-decoration: none;">Link za resetovanje lozinke</a>';
+        $message .= '<a href="copyfy.com/pages/reset_password.php?kod=' . $kod . '" target="_blank" style="height:30px; border-radius: 10px; background-color: green; color: white; padding: 10px; text-decoration: none;">Link za resetovanje lozinke</a>';
         $message .= '</body></html>';
 
         // Postavljanje headera za HTML mejl

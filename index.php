@@ -3,6 +3,7 @@
     $session_active = isset($_SESSION["logged_in_korisnik"]);
     $include_js = !$session_active;
     $logoutId="";
+    $loggedInKorisnik_id="";
     if($session_active){$logoutId="dugmeLogout";
         $loggedInKorisnik_id=$_SESSION["logged_in_korisnik"]["id"];
     }
@@ -161,11 +162,11 @@
             }
 ?>
 <header>
-    <h2 class="logo">Reddify</h2>
+    <h2 id="logo" class="logo">Reddify</h2>
     <nav class="navigacija">
     <?php if ($session_active) { ?>
             <a href="pages/nova_objava.php">Nova objava</a>
-            <a href="#">Pretraga</a>
+            <a href="#" id="toggleSearch">Pretraga</a>
             <a href="#" data-ulogovani-korisnik-id="<?php echo $loggedInKorisnik_id?>" id="tvoje_objave">Tvoje objave</a>
 
             <button id="<?php echo $logoutId; ?>" class="dugmeLogin"><?php echo isset($_SESSION["logged_in_korisnik"]["username"]) ? $_SESSION["logged_in_korisnik"]["username"] : "Uloguj se"; ?></button>
@@ -178,98 +179,6 @@
 
 
 <div class="drzi col-12">
-<div class="meni col-3" >
-        <ul>
-        
-            <h3 id="home"> <ion-icon name="home-outline"></ion-icon>Home </h3>
-        
-        
-            <h3><ion-icon name="arrow-up-outline"></ion-icon>Popularno</h3>
-        
-        <br>
-        <?php
-        $conn = connect();
-        $sql = "SELECT naziv, ion_icon,ID_teme FROM tema";
-        $result = $conn->query($sql);
-        $counter = 0;
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                if ($counter < 4) {
-                    echo "<p id='" . $row['ID_teme'] . "'><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
-                } else {
-                    break;
-                }
-                $counter++;
-            }
-        }
-        ?>
-       
-            <h3 id="vise">Ostalo</h3>
-        
-       
-        <div id="dodatno">
-            <?php
-            $conn = connect();
-            $sql = "SELECT naziv, ion_icon,ID_teme FROM tema";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                $counter = 0;
-                while ($row = $result->fetch_assoc()) {
-                    if ($counter >= 4) {
-                        echo "<p id='" . $row['ID_teme'] . "'><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
-                    }
-                    $counter++;
-                }
-            }
-            
-            if ($session_active) {
-                echo "<h3><ion-icon name='add-outline'></ion-icon><a href='./pages/nova_tema.php'>Nova tema</a></h3>";
-            }
-            
-            ?> 
-            
-        </div>
-    </ul>
-</div>
-<div class="content col-9">
-        <div class="glavneTeme">
-            <div >Prvi</div>
-            <div >Drugi</div>
-            <div >Treći</div>
-            <div >Četvrti</div>
-        </div>
-        <div class="postovi">
-            <div class="col-8 objave">
-            <?php
-            // Izvrši upit za dohvat objava sa svim potrebnim informacijama
-            $conn = connect();
-            $sql = "SELECT objava.*, korisnik.user_name 
-                    FROM objava 
-                    JOIN korisnik ON objava.ID_korisnika = korisnik.ID_korisnika";
-            $result = $conn->query($sql);
-
-            // Prikazi objave ako ima rezultata
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    // Prikazi naslov, sliku, tekst objave i ime korisnika
-                    echo "<div class='objava' style='cursor:pointer;' id-tema='" . $row['ID_teme'] . "' id-korisnika='".$row['ID_korisnika']."'>";
-                    echo "<h2 style='text-align:center;'>" . $row['naslov'] . "</h2>";
-                    $base64_image = base64_encode($row['slika']);
-                    echo "<img  src='data:image/jpeg;base64," . $base64_image . "' alt='Slika objave'>";
-                    echo "<p style='font-size:18px;'>Opis : " . $row['tekst'] . "</p>";
-                    echo "<p style='font-size:18px; text-align:end;'>Objavio/la: " . $row['user_name'] . "</p>";
-                    if($session_active) echo "<ion-icon class='upvote' name='chevron-up-circle-outline' data-state='outline' data-objava-id='" . $row['ID_objave'] . "' data-korisnik-id='" . $loggedInKorisnik_id . "'></ion-icon>";
-                    echo "</div>";
-                }
-            } else {
-                echo "Nema objava za prikaz.";
-            }
-            ?>
-            </div>
-            <div id="zajednica" class="zajednice"> 
-            </div>
-        </div>
-</div>
 
 <div class="wrapper <?php echo $wrapper_class;?>">
     <span class="iks"><ion-icon name="close"></ion-icon></span>
@@ -351,6 +260,143 @@
 </div>
 
 <!-- KRAJ FORME -->
+<div class="meni col-3" >
+        <ul>
+        
+            <h3 id="home"> <ion-icon name="home-outline"></ion-icon>Home </h3>
+        
+        
+            <h3><ion-icon name="arrow-up-outline"></ion-icon>Popularno</h3>
+        
+        <br>
+        <?php
+        $conn = connect();
+        $sql = "SELECT naziv, ion_icon,ID_teme FROM tema";
+        $result = $conn->query($sql);
+        $counter = 0;
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if ($counter < 4) {
+                    echo "<p id='" . $row['ID_teme'] . "'><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
+                } else {
+                    break;
+                }
+                $counter++;
+            }
+        }
+        ?>
+       
+            <h3 id="vise">Ostalo</h3>
+        
+       
+        <div id="dodatno">
+            <?php
+            $conn = connect();
+            $sql = "SELECT naziv, ion_icon,ID_teme FROM tema";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $counter = 0;
+                while ($row = $result->fetch_assoc()) {
+                    if ($counter >= 4) {
+                        echo "<p id='" . $row['ID_teme'] . "'><ion-icon name=\"" . $row['ion_icon'] . "\"></ion-icon> " . $row['naziv'] . "</p>";
+                    }
+                    $counter++;
+                }
+            }
+            
+            if ($session_active) {
+                echo "<h3><ion-icon name='add-outline'></ion-icon><a href='./pages/nova_tema.php'>Nova tema</a></h3>";
+            }
+            
+            ?> 
+            
+        </div>
+    </ul>
+</div>
+<div class="content col-9">
+        <div class="popularneObjave">
+            <?php
+            $conn = connect();
+            $sql = "SELECT objava.*, COUNT(up_vote.ID_objave) AS broj_glasova 
+                    FROM objava 
+                    LEFT JOIN up_vote ON objava.ID_objave = up_vote.ID_objave 
+                    GROUP BY objava.ID_objave 
+                    ORDER BY broj_glasova DESC 
+                    LIMIT 4";
+
+            $result = $conn->query($sql);
+
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+
+                    $style = "style='background-image: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 100%), url(\"" . $row['slika'] . "\"); background-position: center; background-size: cover'";
+                    
+                    echo "<div class='objava' $style>";
+                    echo "<h3>" . $row['naslov'] . "</h3>";
+                    echo "<p>" . $row['tekst'] . "</p>"; 
+
+                    echo "</div>";
+                }
+            } else {
+                echo "Nema objava za prikaz.";
+            }
+            ?>
+        </div>
+        <div class="postovi">
+            <div class="col-8 objave">
+            <?php
+            $upvote_ids = array();
+
+            if ($session_active) {
+                $upvote_query = "SELECT * FROM up_vote WHERE ID_korisnika = $loggedInKorisnik_id";
+                $upvote_result = $conn->query($upvote_query);
+
+                if ($upvote_result) {
+                    if ($upvote_result->num_rows > 0) {
+                        while ($upvote_row = $upvote_result->fetch_assoc()) {
+                            $upvote_ids[] = $upvote_row['ID_objave'];
+                        }
+                    }
+                } else {
+                    echo "Greška prilikom izvršavanja upita za upvote-ove: " . $conn->error;
+                }
+            }
+            $conn = connect();
+            $sql = "SELECT objava.*, korisnik.user_name 
+                    FROM objava 
+                    JOIN korisnik ON objava.ID_korisnika = korisnik.ID_korisnika";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<div class='objava' style='    border-bottom: 0.5px solid white; cursor:pointer;' id-tema='" . $row['ID_teme'] . "' id-korisnika='" . $row['ID_korisnika'] . "'>";
+                    echo "<h2 style='font-size:28px;text-align:center;'>" . $row['naslov'] . "</h2>"; 
+                    echo "<img src='" . $row['slika'] . "' alt='Slika objave'>";
+                    echo "<p style='font-size:24px;'>Opis : " . $row['tekst'] . "</p>";
+                    echo "<p style='font-size:20px; text-align:end;'>Objavio/la: " . $row['user_name'] . "</p>";
+                    if($session_active) {
+                        if (in_array($row['ID_objave'], $upvote_ids)) {
+                            echo "<ion-icon class='upvote'  id-objave=" . $row['ID_objave'] ."  name='chevron-up-circle'></ion-icon>";
+                        } else {
+                            echo "<ion-icon class='upvote'  id-objave=" . $row['ID_objave'] ." name='chevron-up-circle-outline'></ion-icon>";
+                        }
+                    }
+                    echo "</div>";
+                }
+            } else {
+                echo "Nema objava za prikaz.";
+            }
+            ?>
+            </div>
+            <div class="reklame d-none d-xxl-block col-3" style="display:flex; align-items:start; flex-direction:column;">
+
+                <div id="zajednica" class="zajednice"></div>
+                <div id="reklama" class="zajednice"> </div>
+            <div>
+        </div>
+</div>
+
 
 <script src="js/dodatno.js"></script>
 <script src="js/logoutDugme.js"></script>
